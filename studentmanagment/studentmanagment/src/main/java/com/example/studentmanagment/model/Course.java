@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class    Course {
+public class  Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -13,6 +13,7 @@ import java.util.Set;
 @RequestMapping("/api/students")
 public class StudentController {
     private final StudentService studentService;
+
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -37,30 +38,26 @@ public class StudentController {
 
     //Update student
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
-        return studentService.updateStudent(id, student);
+    public Student updateStudent(@PathVariable Long id, @RequestBody Student updated) {
+        return studentService.updateStudent(id, updated);
     }
 
     //Delete student
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
+    public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
-        return ResponseEntity.noContent().build();
     }
+
 
     //Search students by name
     @GetMapping("/search")
-    public List<Student> searchStudents(@RequestParam String name) {
+    public List<Student> searchStudentsByName(@RequestParam String name) {
         return studentService.searchStudentsByName(name);
     }
 
     //Enroll courses
     @PostMapping("/{id}/enroll")
-    public Student enrollCourses(
-            @PathVariable Long id,
-            @RequestBody Map<String, Set<Long>> body // expects {"courseIds": [1,2,3]}
-    ) {
-        Set<Long> courseIds = body.get("courseIds");
+    public Student enrollCourses(@PathVariable Long id, @RequestBody Set<Long> courseIds) {
         return studentService.enrollCourses(id, courseIds);
     }
 
