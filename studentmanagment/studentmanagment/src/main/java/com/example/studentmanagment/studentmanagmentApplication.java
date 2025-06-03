@@ -14,7 +14,7 @@ public class studentmanagmentApplication {
 Add Student:http://localhost:8080/api/students
 	{"name":"Nghiem Huy Hung","age":21,"email":"Vodanhfx29102004@mail.com" }
 	{"name":"Nguyen Van A","age":19,"email":"Skibiditoilet@gmail.com" }
-
+	{"name":"Pham Thi B","age":34,"email":"Phamthib@gmail.com"}
 Search Student by name: http://localhost:8080/api/students/search?name="stundentName"
 
 Add Course:	http://localhost:8080/api/courses

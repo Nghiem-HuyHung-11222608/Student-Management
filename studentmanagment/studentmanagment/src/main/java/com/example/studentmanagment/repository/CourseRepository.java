@@ -1,10 +1,7 @@
-package com.example.studentmanagment.repository;
+    package com.example.studentmanagment.repository;
 
-import com.example.studentmanagment.model.Course;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+    import com.example.studentmanagment.model.Course;
+    import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface CourseRepository extends JpaRepository<Course, Long> {
-    Course findByNameIgnoreCase(String name);
-}
+    public interface CourseRepository extends JpaRepository<Course, Long> {
+    }
