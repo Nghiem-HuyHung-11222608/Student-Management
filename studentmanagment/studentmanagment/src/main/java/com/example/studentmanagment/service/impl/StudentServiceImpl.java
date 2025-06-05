@@ -1,16 +1,8 @@
 package com.example.studentmanagment.service.impl;
 
-import com.example.studentmanagment.exception.ResourceNotFoundException;
-import com.example.studentmanagment.model.Course;
-import com.example.studentmanagment.model.Student;
-import com.example.studentmanagment.repository.CourseRepository;
 //import com.example.studentmanagment.repository.StudentRepository;
 //import com.example.studentmanagment.service.StudentService;
-import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
 
 //@Service
 //public class StudentServiceImpl implements StudentService {

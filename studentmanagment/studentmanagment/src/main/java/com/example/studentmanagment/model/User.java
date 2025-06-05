@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.*;
 
 @Entity
+@Table(name = "\"user\"")
 @Getter
 @Setter
 @NoArgsConstructor

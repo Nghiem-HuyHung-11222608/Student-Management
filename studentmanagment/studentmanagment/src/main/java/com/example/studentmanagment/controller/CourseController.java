@@ -1,11 +1,13 @@
 package com.example.studentmanagment.controller;
 
 import com.example.studentmanagment.dto.CourseDTO;
+import com.example.studentmanagment.dto.CourseMapper;
 import com.example.studentmanagment.model.Course;
 import com.example.studentmanagment.service.CourseService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -32,14 +34,14 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public Course getCourseById(@PathVariable Long id) {
-        return courseService.getCourseById(id);
+    public CourseDTO getCourseById(@PathVariable Long id) {
+        return CourseMapper.toDTO(courseService.getCourseById(id));
     }
 
     @GetMapping
-    public List<Course> getAllCourses() {
-        return courseService.getAllCourses();
+    public List<CourseDTO> getAllCourses() {
+        return courseService.getAllCourses().stream()
+                .map(CourseMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
-
-//Admin only

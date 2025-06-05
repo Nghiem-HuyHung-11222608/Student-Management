@@ -1,5 +1,6 @@
 package com.example.studentmanagment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;
@@ -28,6 +29,7 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "enrolledCourses")
     private Set<User> users = new HashSet<>();
 }

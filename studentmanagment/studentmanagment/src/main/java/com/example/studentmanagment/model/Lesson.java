@@ -1,5 +1,6 @@
 package com.example.studentmanagment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;
@@ -18,6 +19,7 @@ public class Lesson {
     private String videoLink;
 
     @ManyToOne
+    @JsonIgnore
     private Course course;
 
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)

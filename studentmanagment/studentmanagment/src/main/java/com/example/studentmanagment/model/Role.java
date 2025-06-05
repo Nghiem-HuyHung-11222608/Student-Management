@@ -1,5 +1,6 @@
 package com.example.studentmanagment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class Role {
     private Long id;
 
     private String name; // ADMIN, TEACHER, STUDENT
-
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 }
