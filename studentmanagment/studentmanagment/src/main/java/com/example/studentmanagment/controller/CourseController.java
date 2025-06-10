@@ -1,46 +1,107 @@
 package com.example.studentmanagment.controller;
 
-import com.example.studentmanagment.exception.ResourceNotFoundException;
+
+import com.example.studentmanagment.dto.CourseDTO;
+import com.example.studentmanagment.dto.CourseMapper;
 import com.example.studentmanagment.model.Course;
-import com.example.studentmanagment.model.Student;
-import com.example.studentmanagment.repository.CourseRepository;
+import com.example.studentmanagment.service.CourseService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
+@Tag(name = "Course API", description = "Endpoints for course management")
 @RestController
 @RequestMapping("/api/courses")
 public class CourseController {
+    private final CourseService courseService;
+    public CourseController(CourseService courseService) { this.courseService = courseService; }
 
-    private final CourseRepository courseRepository;
-
-    public CourseController(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
-
-    // Create new course
+    @Operation(
+            summary = "Create a new course",
+            description = "Create a new course. Only admins are allowed."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Course created successfully"),
+            @ApiResponse(responseCode = "403", description = "Forbidden")
+    })
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public Course createCourse(@RequestBody Course course) {
-        return courseRepository.save(course);
+    public Course createCourse(
+            @RequestBody Course course,
+            @Parameter(description = "ID of the admin creating the course") @RequestParam Long adminId
+    ) {
+        return courseService.createCourse(course, adminId);
     }
 
-    // Get all courses
-    @GetMapping
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+    @Operation(
+            summary = "Update existing course",
+            description = "Update an existing course by id. Only admins are allowed."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Course updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Course not found"),
+            @ApiResponse(responseCode = "403", description = "Forbidden")
+    })
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public Course updateCourse(
+            @Parameter(description = "ID of the course to update") @PathVariable Long id,
+            @RequestBody Course course,
+            @Parameter(description = "ID of the admin updating the course") @RequestParam Long adminId
+    ) {
+        return courseService.updateCourse(id, course, adminId);
     }
 
-    // Get course by id
+    @Operation(
+            summary = "Delete a course",
+            description = "Delete a course by id. Only admins are allowed."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Course deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Course not found"),
+            @ApiResponse(responseCode = "403", description = "Forbidden")
+    })
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public void deleteCourse(
+            @Parameter(description = "ID of the course to delete") @PathVariable Long id,
+            @Parameter(description = "ID of the admin deleting the course") @RequestParam Long adminId
+    ) {
+        courseService.deleteCourse(id, adminId);
+    }
+
+    @Operation(
+            summary = "Get course by id",
+            description = "Get course details by course id."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Found the course"),
+            @ApiResponse(responseCode = "404", description = "Course not found")
+    })
     @GetMapping("/{id}")
-    public Course getCourseById(@PathVariable Long id) {
-        return courseRepository.findById(id).orElse(null);
+    public CourseDTO getCourseById(
+            @Parameter(description = "ID of the course to retrieve") @PathVariable Long id
+    ) {
+        return CourseMapper.toDTO(courseService.getCourseById(id));
     }
-    // Get all students enrolled in a course
-    @GetMapping("/{id}/students")
-    public Set<Student> getStudentsOfCourse(@PathVariable Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found: " + id));
-        return course.getStudents();
+
+    @Operation(
+            summary = "Get all courses",
+            description = "Retrieve all available courses."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of all courses")
+    })
+    @GetMapping
+    public List<CourseDTO> getAllCourses() {
+        return courseService.getAllCourses().stream()
+                .map(CourseMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

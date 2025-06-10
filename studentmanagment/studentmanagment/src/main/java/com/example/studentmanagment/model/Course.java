@@ -2,33 +2,34 @@ package com.example.studentmanagment.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import lombok.*;
+import java.util.*;
 
 @Entity
-public class    Course {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Course {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String name;
+    @Column(nullable = false)
+    private String title;
 
-    @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+    private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by_id")
+    private User createdBy;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date publishedAt = new Date();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Lesson> lessons = new ArrayList<>();
+
     @JsonIgnore
-    private Set<Student> students = new HashSet<>();
-
-    public Course() {}
-    public Course(String name) { this.name = name; }
-
-    // Getters and setters
-    public Long getId() { return id; }
-
-    //Course Name
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    //Student enroll in Course
-    public Set<Student> getStudents() { return students; }
-    public void setStudents(Set<Student> students) { this.students = students; }
+    @ManyToMany(mappedBy = "enrolledCourses")
+    private Set<User> users = new HashSet<>();
 }
