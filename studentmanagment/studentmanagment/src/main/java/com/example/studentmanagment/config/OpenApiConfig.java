@@ -14,6 +14,6 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Student Management API")
                         .version("1.0")
-                        .description("API documentation for Student 2 project"));
+                        .description("Documentation for Student Management project"));
     }
 }
