@@ -1,4 +1,4 @@
-# Student-Management-Change-Log
+# Change-Log
 
 - 10/6  
   - Removed all student related classes  
