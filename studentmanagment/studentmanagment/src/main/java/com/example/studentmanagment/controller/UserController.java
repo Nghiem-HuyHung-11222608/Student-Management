@@ -1,18 +1,16 @@
 package com.example.studentmanagment.controller;
 
 import com.example.studentmanagment.dto.CourseDTO;
-import com.example.studentmanagment.dto.CourseMapper;
+import com.example.studentmanagment.mapper.CourseMapper;
 import com.example.studentmanagment.dto.UserCreateDTO;
 import com.example.studentmanagment.dto.UserDTO;
 import com.example.studentmanagment.model.Course;
 import com.example.studentmanagment.model.Role;
 import com.example.studentmanagment.model.User;
 import com.example.studentmanagment.repository.RoleRepository;
-import com.example.studentmanagment.repository.UserRepository;
 import com.example.studentmanagment.service.UserService;
 import com.example.studentmanagment.service.impl.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -109,7 +107,7 @@ public class UserController {
     public ResponseEntity<List<CourseDTO>> getEnrolledCourses(@PathVariable Long userId) {
         Set<Course> enrolledCourses = userService.getEnrolledCourses(userId);
         List<CourseDTO> courseDTOS = enrolledCourses.stream()
-                .map(CourseMapper::toDTO)
+                .map(CourseMapper::toCourseDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(courseDTOS);
     }

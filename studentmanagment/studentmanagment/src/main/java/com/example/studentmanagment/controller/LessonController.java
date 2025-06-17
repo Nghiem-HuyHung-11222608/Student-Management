@@ -2,13 +2,15 @@ package com.example.studentmanagment.controller;
 
 import com.example.studentmanagment.model.Lesson;
 import com.example.studentmanagment.service.LessonService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/lessons")
 public class LessonController {
     private final LessonService lessonService;
-    public LessonController(LessonService lessonService) { this.lessonService = lessonService; }
 
     @PreAuthorize("hasRole('TEACHER')")
     @PostMapping("/{courseId}")

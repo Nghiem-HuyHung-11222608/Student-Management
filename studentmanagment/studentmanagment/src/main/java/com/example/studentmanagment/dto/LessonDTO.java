@@ -1,7 +1,9 @@
 package com.example.studentmanagment.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class LessonDTO {
     private Long id;

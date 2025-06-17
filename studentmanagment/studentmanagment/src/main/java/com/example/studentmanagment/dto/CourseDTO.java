@@ -1,9 +1,11 @@
 package com.example.studentmanagment.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
+@Builder
 @Data
 public class CourseDTO {
     private Long id;

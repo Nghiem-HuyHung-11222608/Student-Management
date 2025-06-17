@@ -2,7 +2,7 @@ package com.example.studentmanagment.controller;
 
 
 import com.example.studentmanagment.dto.CourseDTO;
-import com.example.studentmanagment.dto.CourseMapper;
+import com.example.studentmanagment.mapper.CourseMapper;
 import com.example.studentmanagment.model.Course;
 import com.example.studentmanagment.service.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -88,7 +88,7 @@ public class CourseController {
     public CourseDTO getCourseById(
             @Parameter(description = "ID of the course to retrieve") @PathVariable Long id
     ) {
-        return CourseMapper.toDTO(courseService.getCourseById(id));
+        return CourseMapper.toCourseDTO(courseService.getCourseById(id));
     }
 
     @Operation(
@@ -101,7 +101,7 @@ public class CourseController {
     @GetMapping
     public List<CourseDTO> getAllCourses() {
         return courseService.getAllCourses().stream()
-                .map(CourseMapper::toDTO)
+                .map(CourseMapper::toCourseDTO)
                 .collect(Collectors.toList());
     }
 }
