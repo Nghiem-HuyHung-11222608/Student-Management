@@ -9,5 +9,5 @@
   - Added openAPI  
   - Changing Login via JWT Token *(In Progress)*
  
--17/7
-  -Added Login via JWT Token
+- 17/7
+  - Added Login via JWT Token
