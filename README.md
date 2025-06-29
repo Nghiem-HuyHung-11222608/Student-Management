@@ -14,3 +14,6 @@
  
 - 23/6
   - Added Flyway migration with PostgreSQL
+
+- 30/6
+  - Adding Exam-Service
