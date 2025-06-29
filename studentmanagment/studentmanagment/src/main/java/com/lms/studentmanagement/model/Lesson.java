@@ -1,6 +1,7 @@
 package com.lms.studentmanagement.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lms.studentmanagement.model.Exam.Exam;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,4 +31,5 @@ public class Lesson {
 
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
     private List<LessonResult> lessonResults = new ArrayList<>();
+    private Exam exam;
 }
