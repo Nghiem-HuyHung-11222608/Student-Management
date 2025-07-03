@@ -8,4 +8,5 @@ public class QuestionDTO {
     private Long id;
     private String content;
     private List<AnswerDTO> answers;
+    private String type;
 }

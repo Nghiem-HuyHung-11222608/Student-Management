@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ExamAttemptRepository extends JpaRepository <ExamAttempt,Long> {
-    List<ExamAttempt> findByExamIdAndUserId(Long examId,Long userId);
-    int countByExamIdAndUserId(Long examId,Long userId);
-}
+public interface ExamAttemptRepository extends JpaRepository<ExamAttempt, Long> {
+    int countByExamIdAndUserId(Long examId, Long userId);
 
+    List<ExamAttempt> findByExamIdAndUserIdOrderByAttemptNumberAsc(Long examId, Long userId);
+}

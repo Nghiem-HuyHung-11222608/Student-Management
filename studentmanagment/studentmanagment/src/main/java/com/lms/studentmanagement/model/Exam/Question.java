@@ -2,7 +2,6 @@ package com.lms.studentmanagement.model.Exam;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.List;
 
 @Entity
@@ -19,4 +18,13 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
+
+    @Enumerated(EnumType.STRING)
+    private QuestionType type; // Add this
+
+    public enum QuestionType {
+        MULTIPLE_CHOICE,
+        TRUE_FALSE,
+        SHORT_ANSWER
+    }
 }
