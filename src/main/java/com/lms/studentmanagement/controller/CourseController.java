@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Tag(name = "Course API", description = "Endpoints for course management")
 @RestController
-@RequestMapping("/api/courses")
+@RequestMapping("/courses")
 public class CourseController {
     private final CourseService courseService;
 

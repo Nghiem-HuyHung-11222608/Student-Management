@@ -25,10 +25,10 @@ public class LessonResult {
 
     @Enumerated(EnumType.STRING)
     private Status status; // IN_PROGRESS, DONE
-
     private String uploadedFile;
     private String comment;
     private Date updatedAt;
+
 
     public enum Status {
         IN_PROGRESS, DONE
