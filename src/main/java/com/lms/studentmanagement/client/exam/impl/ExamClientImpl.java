@@ -21,7 +21,7 @@ public class ExamClientImpl implements ExamClient {
 
     @Override
     public ExamDto getExamByLessonId(Long lessonId) {
-        String baseUrl = serviceConfig.getExamBaseUrl(); // e.g., http://exam-service
+        String baseUrl = serviceConfig.getExamBaseUrl();
         String url = baseUrl + "/api/exams/by-lesson/" + lessonId;
 
         log.info("Calling Exam Service to get Exam for lessonId={}", lessonId);
@@ -37,7 +37,7 @@ public class ExamClientImpl implements ExamClient {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("X-User-Id", userId); // or whatever your authentication/identification header is
+        headers.set("X-User-Id", userId);
 
         HttpEntity<ExamAttemptRequestDto> request = new HttpEntity<>(attemptRequestDto, headers);
 
