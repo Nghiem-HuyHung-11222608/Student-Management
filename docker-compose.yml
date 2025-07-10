@@ -1,18 +1,18 @@
 version: '3.8'
 
 services:
-  postgres:
+  studentPg:
     image: postgres:14.18
-    container_name: postgres
+    container_name: studentPg
     restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
+      POSTGRES_USER: studentuser
       POSTGRES_PASSWORD: password
       POSTGRES_DB: studentdb
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - studentpgdata:/var/lib/postgresql/data
 
 volumes:
-  pgdata:
+  studentpgdata:
