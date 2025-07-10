@@ -6,6 +6,8 @@ import com.lms.studentmanagement.model.User;
 import com.lms.studentmanagement.repository.RoleRepository;
 import com.lms.studentmanagement.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -35,11 +37,13 @@ public class DataInitializer {
 
         String adminEmail = "admin@mail.com";
         if (userRepository.findByEmail(adminEmail).isEmpty()) {
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
             Role adminRole = roleRepository.findByName("ADMIN");
             User admin = new User();
             admin.setName("Admin");
             admin.setEmail(adminEmail);
-            admin.setPassword("adminpass");
+            admin.setPassword(passwordEncoder.encode("adminpass"));
             admin.setAddress("System");
             admin.setPhoneNumber("0000000000");
             admin.setCreatedAt(new Date());
