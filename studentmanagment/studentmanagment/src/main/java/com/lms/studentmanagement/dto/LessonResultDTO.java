@@ -13,4 +13,6 @@ public class LessonResultDTO {
     private String uploadedFile;
     private String comment;
     private Date updatedAt;
+    private Integer examScore;
+
 }

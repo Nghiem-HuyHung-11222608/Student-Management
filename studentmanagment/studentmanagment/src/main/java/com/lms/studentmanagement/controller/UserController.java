@@ -11,6 +11,8 @@ import com.lms.studentmanagement.repository.RoleRepository;
 import com.lms.studentmanagement.service.UserService;
 import com.lms.studentmanagement.service.impl.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +25,13 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, RoleRepository roleRepository) {
+
+    public UserController(UserService userService, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Create new user (admin only)
@@ -35,7 +40,7 @@ public class UserController {
         User user = new User();
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setAddress(userDto.getAddress());
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setCreatedAt(new java.util.Date());
@@ -53,7 +58,7 @@ public class UserController {
     }
 
     // Get all users (admin only)
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<UserDTO> getAllUsers() {
         return userService.getAllUsers().stream()
@@ -62,7 +67,7 @@ public class UserController {
     }
 
     // Get user by id (admin only)
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN','TEACHER')")
     @GetMapping("/{id}")
     public UserDTO getUserById(@PathVariable Long id) {
         return UserServiceImpl.toDTO(userService.getUserById(id));

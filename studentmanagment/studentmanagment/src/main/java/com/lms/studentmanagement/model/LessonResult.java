@@ -1,5 +1,6 @@
 package com.lms.studentmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,18 +18,19 @@ public class LessonResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     private Lesson lesson;
+
 
     @ManyToOne
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private Status status; // IN_PROGRESS, DONE
+    private Status status;
     private String uploadedFile;
     private String comment;
     private Date updatedAt;
-
 
     public enum Status {
         IN_PROGRESS, DONE
